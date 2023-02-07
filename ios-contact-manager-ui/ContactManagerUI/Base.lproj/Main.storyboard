@@ -83,7 +83,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
                                 <items>
                                     <navigationItem title="새 연락처" id="SAi-yp-vYX">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="K7W-vF-54V"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="K7W-vF-54V">
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="ScH-T0-eiD" id="ExO-8y-nJd"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="J7s-ly-ThN">
                                             <connections>
                                                 <action selector="saveButtonTapped:" destination="ScH-T0-eiD" id="VzD-ae-81v"/>

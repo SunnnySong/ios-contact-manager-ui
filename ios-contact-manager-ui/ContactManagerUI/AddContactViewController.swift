@@ -25,9 +25,12 @@ final class AddContactViewController: UIViewController {
             try makeNewContact(name: name, age: age, contact: contact)
             self.dismiss(animated: true)
         } catch {
-            madeErrorAlert(description: error.localizedDescription)
+            makeErrorAlert(description: error.localizedDescription)
         }
-        
+    }
+    
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        makeCancelAlert()
     }
     
     private func makeNewContact(name: String, age: String, contact: String) throws {
@@ -45,7 +48,7 @@ final class AddContactViewController: UIViewController {
 }
 
 extension AddContactViewController {
-    func madeErrorAlert(description: String) {
+    func makeErrorAlert(description: String) {
         let alert = UIAlertController(
             title: description,
             message: nil,
@@ -55,39 +58,27 @@ extension AddContactViewController {
         alert.addAction(checkAction)
         self.present(alert, animated: true)
     }
+    
+    func makeCancelAlert() {
+        let alert = UIAlertController(
+            title: "정말로 취소하시겠습니까?",
+            message: nil,
+            preferredStyle: .alert
+        )
+        let noAction = UIAlertAction(title: "아니오", style: .default)
+        let yesAction = UIAlertAction(title: "예", style: .destructive) { _ in
+            self.dismiss(animated: true)
+        }
+        alert.addAction(noAction)
+        alert.addAction(yesAction)
+        alert.preferredAction = yesAction
+        self.present(alert, animated: true)
+    }
 }
 
 extension AddContactViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        if let text = textField.text, let textRange = Range(range, in: text) {
-            let updatedText = text.replacingCharacters(in: textRange, with: string)
-            
-            if text.count == 2 && updatedText.count == 3 {
-                textField.text = text + "-" + string
-                return false
-            }
-            if text.count == 6 && updatedText.count == 7 {
-                textField.text = text + "-" + string
-                return false
-            }
-            
-            if text.count == 11 && updatedText.count == 12 {
-                var normalText = text.replacingOccurrences(of: "-", with: "")
-                normalText.insert("-", at: normalText.index(normalText.startIndex, offsetBy: 3))
-                normalText.insert("-", at: normalText.index(normalText.startIndex, offsetBy: 7))
-                textField.text = normalText
-            }
-            
-            if text.count == 12 && updatedText.count == 13 {
-                var normalText = text.replacingOccurrences(of: "-", with: "")
-                normalText.insert("-", at: normalText.index(normalText.startIndex, offsetBy: 3))
-                normalText.insert("-", at: normalText.index(normalText.startIndex, offsetBy: 8))
-                textField.text = normalText
-            }
-            
-        }
-        return true
+        return false
     }
 }
 

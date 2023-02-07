@@ -12,6 +12,7 @@ final class ContactViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     private var dataSource: UITableViewDiffableDataSource<Section, UserInfo>!
+    
     private let contactsData = ModelData().contacts
 
     override func viewDidLoad() {
@@ -26,7 +27,9 @@ final class ContactViewController: UIViewController {
         tableView.delegate = self
     }
     
+    
     private func setupTableViewDataSource() {
+        
         tableView.dataSource = UITableViewDiffableDataSource<Section, UserInfo> (tableView: self.tableView, cellProvider: { [weak self] (tableView, indexPath, itemIdentifier) -> UITableViewCell? in
             let identifier = "contactCell"
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
@@ -48,7 +51,6 @@ final class ContactViewController: UIViewController {
 }
 
 extension ContactViewController: UITableViewDelegate {
-
 }
 
 
