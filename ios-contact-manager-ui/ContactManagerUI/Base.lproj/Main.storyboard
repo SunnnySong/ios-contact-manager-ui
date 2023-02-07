@@ -84,7 +84,11 @@
                                 <items>
                                     <navigationItem title="새 연락처" id="SAi-yp-vYX">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="K7W-vF-54V"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="J7s-ly-ThN"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="J7s-ly-ThN">
+                                            <connections>
+                                                <action selector="saveButtonTapped:" destination="ScH-T0-eiD" id="VzD-ae-81v"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -164,7 +168,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="ageTextField" destination="4mA-We-aYk" id="X9Y-2p-Mns"/>
                         <outlet property="contactTextField" destination="JgN-bY-Sxl" id="7Gv-kB-fVd"/>
+                        <outlet property="nameTextField" destination="HRD-aI-T2G" id="QZn-Es-9M5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6CN-99-eFt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

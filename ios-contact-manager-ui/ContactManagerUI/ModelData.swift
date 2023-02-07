@@ -9,18 +9,23 @@ import Foundation
 
 final class ModelData {
     // TODO: Error 처리하기
-    private(set) var contacts: [UserInfo] = (try? load("contacts.json")) ?? []
+    let fileName = "contacts.json"
+    var fileURL: URL? {
+        return Bundle.main.url(forResource: fileName, withExtension: nil)
+    }
+    
+    lazy var contacts: [UserInfo] = (try? load(fileURL: fileURL)) ?? []
 }
 
-func load<T: Decodable>(_ fileName: String) throws -> T {
+func load<T: Decodable>(fileURL: URL?) throws -> T {
     let data: Data
     
-    guard let file = Bundle.main.url(forResource: fileName, withExtension: nil) else {
+    guard let fileURL = fileURL else {
         throw ContactError.FileNotFound
     }
     
     do {
-        data = try Data(contentsOf: file)
+        data = try Data(contentsOf: fileURL)
     } catch {
         throw ContactError.FileNotLoad
     }
@@ -33,3 +38,19 @@ func load<T: Decodable>(_ fileName: String) throws -> T {
     }
 }
     
+func write<T: Encodable>(fileURL: URL?, newData: T) throws {
+    
+    guard let fileURL = fileURL else {
+        throw ContactError.FileNotFound
+    }
+    
+    do {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        
+        let updatedData = try encoder.encode(newData)
+        try? updatedData.write(to: fileURL)
+    } catch {
+        throw ContactError.FileNotParse
+    }
+}
