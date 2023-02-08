@@ -7,12 +7,17 @@
 
 import UIKit
 
+protocol AddContactDelegate: AnyObject {
+    func add(info: UserInfo)
+}
+
 final class AddContactViewController: UIViewController {
-    
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var ageTextField: UITextField!
     @IBOutlet weak var contactTextField: UITextField!
+
+    weak var delegate: AddContactDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +29,7 @@ final class AddContactViewController: UIViewController {
         do {
             // TODO: 새로운 연락처 Contacts.json에 추가하기
             let newContact = try UserInfo(name: name, age: age, phone: contact)
+            self.delegate.add(info: newContact)
             self.dismiss(animated: true)
         } catch {
             makeErrorAlert(description: error.localizedDescription)

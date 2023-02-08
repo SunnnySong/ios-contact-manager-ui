@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		4000CC39298A50F3003C8B95 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4000CC38298A50F3003C8B95 /* TableViewDataSource.swift */; };
 		4000CC3B298A59DC003C8B95 /* ContactError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4000CC3A298A59DC003C8B95 /* ContactError.swift */; };
+		4049F895299344610070349E /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4049F894299344610070349E /* ContactCell.swift */; };
+		4049F897299362B70070349E /* ContactsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4049F896299362B70070349E /* ContactsController.swift */; };
+		4049F89B299362FD0070349E /* DataSourceFromJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4049F89A299362FD0070349E /* DataSourceFromJSON.swift */; };
 		4062671E2954226900A2CBE4 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4062671D2954226900A2CBE4 /* UserInfo.swift */; };
 		40BC412D2990BB9A00BF62B3 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BC412C2990BB9A00BF62B3 /* AddContactViewController.swift */; };
 		40F965542952ED4200ACCA0C /* StringLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F965532952ED4200ACCA0C /* StringLiteral.swift */; };
@@ -51,6 +54,9 @@
 /* Begin PBXFileReference section */
 		4000CC38298A50F3003C8B95 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		4000CC3A298A59DC003C8B95 /* ContactError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactError.swift; sourceTree = "<group>"; };
+		4049F894299344610070349E /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		4049F896299362B70070349E /* ContactsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsController.swift; sourceTree = "<group>"; };
+		4049F89A299362FD0070349E /* DataSourceFromJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceFromJSON.swift; sourceTree = "<group>"; };
 		4062671D2954226900A2CBE4 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		40BC412C2990BB9A00BF62B3 /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		40F965532952ED4200ACCA0C /* StringLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiteral.swift; sourceTree = "<group>"; };
@@ -92,6 +98,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4049F899299362DC0070349E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				4049F89A299362FD0070349E /* DataSourceFromJSON.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		4F5075152992304100C0AC18 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				4FAE8E8C298A526F006DCD46 /* ModelData.swift */,
+				4049F896299362B70070349E /* ContactsController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -122,6 +137,7 @@
 			children = (
 				4FEEF66729879DE000FF6A89 /* Main.storyboard */,
 				4FEEF66C29879DE200FF6A89 /* LaunchScreen.storyboard */,
+				4049F894299344610070349E /* ContactCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -180,6 +196,7 @@
 		4FEEF66029879DE000FF6A89 /* ContactManagerUI */ = {
 			isa = PBXGroup;
 			children = (
+				4049F899299362DC0070349E /* Protocols */,
 				4F5075192992318900C0AC18 /* Common */,
 				4F5075152992304100C0AC18 /* Controllers */,
 				4000CC38298A50F3003C8B95 /* TableViewDataSource.swift */,
@@ -306,10 +323,13 @@
 				4FEEF66629879DE000FF6A89 /* ContactViewController.swift in Sources */,
 				4FEEF67529879E1D00FF6A89 /* IOManager.swift in Sources */,
 				4FEEF66229879DE000FF6A89 /* AppDelegate.swift in Sources */,
+				4049F89B299362FD0070349E /* DataSourceFromJSON.swift in Sources */,
 				4FAE8E8D298A526F006DCD46 /* ModelData.swift in Sources */,
 				4FEEF66429879DE000FF6A89 /* SceneDelegate.swift in Sources */,
 				4000CC3B298A59DC003C8B95 /* ContactError.swift in Sources */,
+				4049F897299362B70070349E /* ContactsController.swift in Sources */,
 				4FEEF67329879E0300FF6A89 /* Extension.swift in Sources */,
+				4049F895299344610070349E /* ContactCell.swift in Sources */,
 				4FEEF67929879E2B00FF6A89 /* Phonebook.swift in Sources */,
 				4000CC39298A50F3003C8B95 /* TableViewDataSource.swift in Sources */,
 				4FEEF67629879E2200FF6A89 /* Error.swift in Sources */,
