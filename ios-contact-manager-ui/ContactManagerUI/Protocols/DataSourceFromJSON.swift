@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 enum JSONError: Error {
     case FileNotParse
     case FileNotFound
@@ -15,19 +14,19 @@ enum JSONError: Error {
 }
 
 protocol DataSourceFromJSON {
-    var filePath: String { get }
-    var fileURL: URL? { get }
+    static var filePath: String { get }
+    static var fileURL: URL? { get }
 
     associatedtype T: Codable
-    var data: [T] { get }
-    func load() throws -> T
-    func save(data: [T]) throws
+    static var data: [T] { get }
+    static func load() throws -> T
+    static func save(data: [T]) throws
 }
 
 extension DataSourceFromJSON {
-    var fileURL: URL? { Bundle.main.url(forResource: filePath, withExtension: nil) }
+    static var fileURL: URL? { Bundle.main.url(forResource: filePath, withExtension: nil) }
 
-    func load<T: Decodable>() throws -> T {
+    static func load<T: Decodable>() throws -> T {
         let data: Data
         guard let url = fileURL else {
             throw JSONError.FileNotFound
@@ -47,7 +46,7 @@ extension DataSourceFromJSON {
         }
     }
 
-    func save<T:Encodable>(data: [T]) throws {
+    static func save<T:Encodable>(data: [T]) throws {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         guard let fileURL else {

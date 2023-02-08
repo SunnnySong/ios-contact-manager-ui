@@ -7,48 +7,37 @@
 
 import UIKit
 
-final class ContactViewController: UIViewController {
-
+final class ContactViewController: UIViewController, UITableViewDelegate {
     enum Section: CaseIterable {
         case main
     }
     @IBOutlet private weak var tableView: UITableView!
-    var dataSource: UITableViewDiffableDataSource<Section, UserInfo>!
-    let contactsController = ContactsController()
+    lazy var dataSource: UITableViewDiffableDataSource<Section, UserInfo> = DataSource(tableView)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
-        configureDataSource()
+        setup()
         fetchContactsData()
     }
 
-    private func setupTableView() {
+    private func setup() {
         tableView.delegate = self
         tableView.register(ContactCell.self)
     }
 }
 
 extension ContactViewController {
-    func configureDataSource() {
-        dataSource = UITableViewDiffableDataSource<Section, UserInfo>(tableView: tableView) { tableView, indexPath, itemIdentifier in
-            let cell = tableView.reuse(ContactCell.self, indexPath)
-            cell.userInfo = itemIdentifier
-            return cell
-        }
-    }
-
     func fetchContactsData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, UserInfo>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(contactsController.sortedContacts)
+        snapshot.appendItems(ContactsController.sortedContacts)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
 extension ContactViewController: AddContactDelegate {
-    func add(info: UserInfo) {
-        contactsController.addContact(info)
+    func add(contact: UserInfo) {
+        ContactsController.add(contact: contact)
         fetchContactsData()
     }
 
@@ -60,7 +49,30 @@ extension ContactViewController: AddContactDelegate {
     }
 }
 
-extension ContactViewController: UITableViewDelegate {
+extension ContactViewController {
+    final class DataSource: UITableViewDiffableDataSource<ContactViewController.Section, UserInfo> {
+        init(_ tableView: UITableView) {
+            super.init(tableView: tableView) { tableView, indexPath, itemIdentifier in
+                let cell = tableView.reuse(ContactCell.self, indexPath)
+                cell.configure(model: itemIdentifier)
+                return cell
+            }
+        }
 
+        // MARK: editing support
+        override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+            return true
+        }
+
+        override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+            if editingStyle == .delete {
+                if let identifierToDelete = itemIdentifier(for: indexPath) {
+                    var snapshot = self.snapshot()
+                    snapshot.deleteItems([identifierToDelete])
+                    ContactsController.delete(contact: identifierToDelete)
+                    apply(snapshot)
+                }
+            }
+        }
+    }
 }
-

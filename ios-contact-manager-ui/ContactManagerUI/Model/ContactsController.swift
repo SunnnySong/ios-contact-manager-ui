@@ -7,20 +7,26 @@
 
 import Foundation
 
-final class ContactsController: DataSourceFromJSON {
-    var filePath: String { "contacts.json" }
-    var data: [UserInfo]  {
+actor ContactsController: DataSourceFromJSON {
+    static var filePath: String { "contacts.json" }
+    static private(set) var data: [UserInfo]  {
         get { (try? load()) ?? [] }
         set { try? save(data: newValue) }
     }
 }
 
 extension ContactsController {
-    func addContact(_ contact: UserInfo) {
+    static func add(contact: UserInfo) {
         data += [contact]
     }
 
-    var sortedContacts: [UserInfo] {
+    static func delete(contact: UserInfo) {
+        if let index = data.firstIndex(where: { $0 == contact }) {
+            data.remove(at: index)
+        }
+    }
+
+    static var sortedContacts: [UserInfo] {
         data.sorted()
     }
 }

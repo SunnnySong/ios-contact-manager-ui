@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddContactDelegate: AnyObject {
-    func add(info: UserInfo)
+    func add(contact: UserInfo)
 }
 
 final class AddContactViewController: UIViewController {
@@ -27,9 +27,8 @@ final class AddContactViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let name = nameTextField.text, let age = ageTextField.text, let contact = contactTextField.text else { return }
         do {
-            // TODO: 새로운 연락처 Contacts.json에 추가하기
             let newContact = try UserInfo(name: name, age: age, phone: contact)
-            self.delegate.add(info: newContact)
+            self.delegate.add(contact: newContact)
             self.dismiss(animated: true)
         } catch {
             makeErrorAlert(description: error.localizedDescription)
@@ -117,7 +116,6 @@ extension AddContactViewController: UITextFieldDelegate {
         return relocated
     }
 }
-
 
 extension String {
     static var hyphen: String { "-" }

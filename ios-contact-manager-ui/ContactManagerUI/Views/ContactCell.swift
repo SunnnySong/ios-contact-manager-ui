@@ -8,15 +8,12 @@
 import UIKit
 
 final class ContactCell: UITableViewCell {
-
-    var userInfo: ContactCellModel?
-
-    override func updateConfiguration(using state: UICellConfigurationState) {
-        super.updateConfiguration(using: state)
-
-        var contentConfig = defaultContentConfiguration().updated(for: state)
-        contentConfig.text = userInfo?.text
-        contentConfig.secondaryText = userInfo?.secondaryText
+    func configure(model: ContactCellModel) {
+        var contentConfig = defaultContentConfiguration()
+        contentConfig.text = model.text
+        contentConfig.textProperties.font = .preferredFont(forTextStyle: .headline)
+        contentConfig.secondaryText = model.secondaryText
+        contentConfig.secondaryTextProperties.font = .preferredFont(forTextStyle: .body)
         contentConfiguration = contentConfig
     }
 }
