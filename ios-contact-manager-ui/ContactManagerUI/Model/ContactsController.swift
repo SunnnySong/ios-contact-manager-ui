@@ -7,6 +7,20 @@
 
 import Foundation
 
-final class ContactsController {
-    
+final class ContactsController: DataSourceFromJSON {
+    var filePath: String { "contacts.json" }
+    var data: [UserInfo]  {
+        get { (try? load()) ?? [] }
+        set { try? save(data: newValue) }
+    }
+}
+
+extension ContactsController {
+    func addContact(_ contact: UserInfo) {
+        data += [contact]
+    }
+
+    var sortedContacts: [UserInfo] {
+        data.sorted()
+    }
 }

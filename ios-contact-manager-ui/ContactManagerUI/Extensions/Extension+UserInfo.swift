@@ -7,11 +7,17 @@
 
 import Foundation
 
-extension UserInfo {
-    var title: String {
+extension UserInfo: ContactCellModel {
+    var text: String {
         "\(self.name)(\(self.age))"
     }
-    var subtitle: String {
+    var secondaryText: String {
         self.phone
+    }
+}
+
+extension UserInfo: Comparable {
+    static func < (lhs: UserInfo, rhs: UserInfo) -> Bool {
+        lhs.name < rhs.name || lhs.age < rhs.age || lhs.phone < rhs.phone
     }
 }

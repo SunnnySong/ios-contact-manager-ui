@@ -13,53 +13,43 @@ final class ContactViewController: UIViewController {
         case main
     }
     @IBOutlet private weak var tableView: UITableView!
-//    private let dataSource = TableViewDataSource()
     var dataSource: UITableViewDiffableDataSource<Section, UserInfo>!
-    var contactsData = ModelData().contacts
+    let contactsController = ContactsController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         configureDataSource()
-        fetchData()
+        fetchContactsData()
     }
 
     private func setupTableView() {
         tableView.delegate = self
-//        tableView.dataSource = dataSource
+        tableView.register(ContactCell.self)
     }
 }
 
 extension ContactViewController {
     func configureDataSource() {
         dataSource = UITableViewDiffableDataSource<Section, UserInfo>(tableView: tableView) { tableView, indexPath, itemIdentifier in
-            let identifier = ContactCell.reuseIdentifier
-            let cell =  tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-            var content = cell.defaultContentConfiguration()
-            content.text = self.contactsData[indexPath.row].title
-            content.secondaryText = self.contactsData[indexPath.row].subtitle
-            cell.contentConfiguration = content
+            let cell = tableView.reuse(ContactCell.self, indexPath)
+            cell.userInfo = itemIdentifier
             return cell
         }
     }
 
-    func fetchData() {
+    func fetchContactsData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, UserInfo>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(contactsData)
+        snapshot.appendItems(contactsController.sortedContacts)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
-
 extension ContactViewController: AddContactDelegate {
     func add(info: UserInfo) {
-        contactsData += [info]
-
-        var snapshot = NSDiffableDataSourceSnapshot<Section, UserInfo>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(contactsData)
-        dataSource.apply(snapshot, animatingDifferences: true)
+        contactsController.addContact(info)
+        fetchContactsData()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -69,6 +59,7 @@ extension ContactViewController: AddContactDelegate {
         }
     }
 }
+
 extension ContactViewController: UITableViewDelegate {
 
 }

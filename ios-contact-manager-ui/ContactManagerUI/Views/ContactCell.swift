@@ -7,6 +7,16 @@
 
 import UIKit
 
-class ContactCell: UITableViewCell {
-    static let reuseIdentifier = "contact-cell-reuse-identifier"
+final class ContactCell: UITableViewCell {
+
+    var userInfo: ContactCellModel?
+
+    override func updateConfiguration(using state: UICellConfigurationState) {
+        super.updateConfiguration(using: state)
+
+        var contentConfig = defaultContentConfiguration().updated(for: state)
+        contentConfig.text = userInfo?.text
+        contentConfig.secondaryText = userInfo?.secondaryText
+        contentConfiguration = contentConfig
+    }
 }
