@@ -7,15 +7,16 @@
 
 import Foundation
 
-actor ContactsController: DataSourceFromJSON {
+enum ContactsController: DataSourceFromJSON {
     static var filePath: String { "contacts.json" }
-    static private(set) var data: [UserInfo]  {
-        get { (try? load()) ?? [] }
-        set { try? save(data: newValue) }
-    }
+    static private(set) var data: [UserInfo] = (try? load()) ?? []
 }
 
 extension ContactsController {
+    static func saveCurrentData() {
+        try? save(data: data)
+    }
+
     static func add(contact: UserInfo) {
         data += [contact]
     }
